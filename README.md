@@ -27,12 +27,12 @@ Get a list of all meeting rooms.
     {
       "room_id": 1,
       "room_name": "Room A",
-      "status": "Available"
+      "status": "0"
     },
     {
       "room_id": 2,
       "room_name": "Room B",
-      "status": "Occupied"
+      "status": "1"
     }
     // ... other rooms
   ]
@@ -87,12 +87,12 @@ Get a list of all meeting rooms.
     {
       "room_id": 1,
       "room_name": "Room A",
-      "status": "Available"
+      "status": "0"
     },
     {
       "room_id": 2,
       "room_name": "Room B",
-      "status": "Occupied"
+      "status": "1"
     }
     // ... other rooms
   ]
@@ -109,7 +109,7 @@ Body:
 json
 {
   "room_name": "New Room",
-  "status": "Available"
+  "status": "0"
 }
 Response
 Status: 201 Created
@@ -130,7 +130,7 @@ Content-Type: application/json
 Body:
 {
   "room_name": "Updated Room",
-  "status": "Occupied"
+  "status": "1"
 }
 Response
 Status: 200 OK
