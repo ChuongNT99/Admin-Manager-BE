@@ -12,8 +12,10 @@ db_config = {
     "database": "admin_manager_db",
 }
 
+
 def create_db_connection():
     return mysql.connector.connect(**db_config)
+
 
 @app.route("/rooms", methods=["GET"])
 def get_rooms():
@@ -29,6 +31,7 @@ def get_rooms():
         cursor.close()
         conn.close()
 
+
 @app.route("/rooms", methods=["POST"])
 def create_room():
     try:
@@ -39,7 +42,8 @@ def create_room():
         conn = create_db_connection()
         cursor = conn.cursor()
         cursor.execute(
-            "SELECT room_name FROM room_meeting WHERE room_name = %s", (room_name,)
+            "SELECT room_name FROM room_meeting WHERE room_name = %s", (
+                room_name,)
         )
         existing_room = cursor.fetchone()
 
@@ -57,6 +61,7 @@ def create_room():
     finally:
         cursor.close()
         conn.close()
+
 
 @app.route("/rooms/<int:room_id>", methods=["PUT"])
 def update_room(room_id):
@@ -87,6 +92,7 @@ def update_room(room_id):
         cursor.close()
         conn.close()
 
+
 @app.route("/rooms/<int:room_id>", methods=["DELETE"])
 def delete_room(room_id):
     try:
@@ -101,9 +107,11 @@ def delete_room(room_id):
         cursor.close()
         conn.close()
 
+
 @app.errorhandler(404)
 def not_found(e):
     return jsonify({"error": "Not Found"}), 404
+
 
 if __name__ == "__main":
     app.run(debug=True)
