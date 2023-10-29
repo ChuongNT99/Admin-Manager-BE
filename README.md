@@ -58,10 +58,6 @@ Content-Type: application/json
   "message": "Room created successfully"
 }
 
-Dưới đây là một ví dụ về tài liệu API cho dự án Flask của bạn. Tài liệu này sử dụng định dạng Markdown, nhưng bạn có thể chuyển đổi nó sang định dạng khác nếu cần.
-
-markdown
-Copy code
 # Room Management API Documentation
 
 This documentation provides details on how to use the Room Management API.
