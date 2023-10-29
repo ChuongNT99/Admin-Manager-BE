@@ -32,7 +32,7 @@ def create_room():
     try:
         data = request.get_json()
         room_name = data.get("room_name")
-        status = data.get("status")
+        status = data.get("status", 0)
 
         conn = create_db_connection()
         cursor = conn.cursor()
