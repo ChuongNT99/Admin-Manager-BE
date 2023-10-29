@@ -61,7 +61,6 @@ def update_room(room_id):
     try:
         data = request.get_json()
         room_name = data.get("room_name")
-        status = data.get("status")
 
         conn = create_db_connection()
         cursor = conn.cursor()
@@ -75,8 +74,8 @@ def update_room(room_id):
             return jsonify({"error": "Room name already exists"}), 400
 
         cursor.execute(
-            "UPDATE room_meeting SET room_name=%s, status=%s WHERE room_id=%s",
-            (room_name, status, room_id),
+            "UPDATE room_meeting SET room_name=%s WHERE room_id=%s",
+            (room_name, room_id),
         )
         conn.commit()
         return jsonify({"message": "Room updated successfully"})
