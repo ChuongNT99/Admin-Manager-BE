@@ -107,7 +107,6 @@ URL: /rooms
 Content-Type: application/json
 Body:
 json
-Copy code
 {
   "room_name": "New Room",
   "status": "Available"
@@ -116,7 +115,6 @@ Response
 Status: 201 Created
 Content-Type: application/json
 json
-Copy code
 {
   "message": "Room created successfully"
 }
