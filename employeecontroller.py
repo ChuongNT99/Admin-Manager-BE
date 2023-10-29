@@ -6,7 +6,7 @@ app=Flask(__name__)
 db_config = {
     'host': 'localhost',
     'user': 'root',
-    'password': '123456',
+    'password': '001122',
     'database': 'admin_manager_db',
 }
     
