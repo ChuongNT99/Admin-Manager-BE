@@ -1,33 +1,18 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Blueprint
 from flask_cors import CORS
+from db_config import db_config
 import mysql.connector
 
 app = Flask(__name__)
-CORS(app)
 
-def add_cors_headers(response):
-    response.headers['Access-Control-Allow-Origin'] = '*'  
-    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE' 
-    response.headers['Access-Control-Allow-Headers'] = 'Content-Type' 
-    return response
-
-@app.after_request
-def after_request(response):
-    return add_cors_headers(response)
-
-db_config = {
-    "host": "localhost",
-    "user": "root",
-    "password": "001122",
-    "database": "admin_manager_db",
-}
+room_api = Blueprint("roomcontroller", __name__)
 
 
 def create_db_connection():
     return mysql.connector.connect(**db_config)
 
 
-@app.route("/rooms", methods=["GET"])
+@room_api.route("/rooms", methods=["GET"])
 def get_rooms():
     try:
         conn = create_db_connection()
@@ -42,7 +27,7 @@ def get_rooms():
         conn.close()
 
 
-@app.route("/rooms", methods=["POST"])
+@room_api.route("/rooms", methods=["POST"])
 def create_room():
     try:
         data = request.get_json()
@@ -73,7 +58,7 @@ def create_room():
         conn.close()
 
 
-@app.route("/rooms/<int:room_id>", methods=["PUT"])
+@room_api.route("/rooms/<int:room_id>", methods=["PUT"])
 def update_room(room_id):
     try:
         data = request.get_json()
@@ -103,7 +88,8 @@ def update_room(room_id):
         conn.close()
 
 
-@app.route("/rooms/<int:room_id>", methods=["DELETE"])
+
+@room_api.route("/rooms/<int:room_id>", methods=["DELETE"])
 def delete_room(room_id):
     try:
         conn = create_db_connection()
@@ -117,11 +103,6 @@ def delete_room(room_id):
         cursor.close()
         conn.close()
 
-
-@app.errorhandler(404)
+@room_api.errorhandler(404)
 def not_found(e):
     return jsonify({"error": "Not Found"}), 404
-
-
-if __name__ == "__main":
-    app.run(debug=True)
