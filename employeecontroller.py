@@ -1,42 +1,15 @@
 import  mysql.connector
 from flask import *
 from flask_cors import CORS
+from db_config import db_config
 
 app=Flask(__name__)
 
-# api_cors_config = {
-#     "origins": ["http://localhost::5000"],
-#     "methods": ["GET", "POST", "PUT", "DELETE"],
-#     "allow_headers": ["Authorization", "Content-Type"]
-# }
 
-# CORS(app, resources={
-#     r"/*": api_cors_config
-# })
-
-#CORS(app,origins='https://06dd-210-245-110-144.ngrok-free.app')
-
-
-def add_cors_headers(response):
-    response.headers['Access-Control-Allow-Origin'] = '*'  
-    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE' 
-    response.headers['Access-Control-Allow-Headers'] = 'Content-Type' 
-    return response
-
-@app.after_request
-def after_request(response):
-    return add_cors_headers(response)
-
-db_config = {
-    'host': 'localhost',
-    'user': 'root',
-    'password': '001122',
-    'database': 'admin_manager_db',
-}
     
-employee_api = Blueprint("employee_api", __name__)
+employee_api = Blueprint("employeecontroller", __name__)
 
-@app.route('/employee', methods=['POST', 'GET'])
+@employee_api.route('/employee', methods=['POST', 'GET'])
 def data():
     if request.method=='GET':
         try:
@@ -66,7 +39,7 @@ def data():
         finally:
             cursor.close()
             conn.close()
-@app.route('/employee/<int:employees_id>',methods=[ 'DELETE', 'PUT'])
+@employee_api.route('/employee/<int:employees_id>',methods=[ 'DELETE', 'PUT'])
 def employee_one(employees_id):
     
     if request.method=='PUT':
@@ -101,5 +74,3 @@ def employee_one(employees_id):
             conn.close()   
    
         
-if __name__ == "__main__":
-    app.run(debug=True)

@@ -1,12 +1,10 @@
 from flask import Flask 
 from employeecontroller import employee_api
-from roomcontroller import  room_api
 from flask_cors import CORS
 
 app = Flask(__name__)
 
 app.register_blueprint(employee_api)
-app.register_blueprint(room_api)
 
 CORS(app)
 
@@ -19,7 +17,6 @@ def add_cors_headers(response):
 @app.after_request
 def after_request(response):
     return add_cors_headers(response)
-
 
 if __name__ == "__main":
     app.run(debug=True)
