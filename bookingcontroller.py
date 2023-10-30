@@ -20,43 +20,6 @@ def create_db_connection():
         print(f"Error: {e}")
         return None
 
-
-@app.route('/rooms', methods=['POST'])
-def create_room():
-    data = request.get_json()
-    room_name = data.get('room_name')
-
-    conn = create_db_connection()
-    cursor = conn.cursor()
-
-    try:
-        cursor.execute(
-            "INSERT INTO room_meeting (room_name, status) VALUES (%s, %s)", (room_name, False))
-        conn.commit()
-        return jsonify({'message': 'Room created successfully'})
-    except Error as e:
-        return jsonify({'error': 'Internal Server Error'}), 500
-    finally:
-        cursor.close()
-        conn.close()
-
-
-@app.route('/rooms', methods=['GET'])
-def get_rooms():
-    conn = create_db_connection()
-    cursor = conn.cursor(dictionary=True)
-
-    try:
-        cursor.execute("SELECT * FROM room_meeting")
-        rows = cursor.fetchall()
-        return jsonify({'rooms': rows})
-    except Error as e:
-        return jsonify({'error': 'Internal Server Error'}), 500
-    finally:
-        cursor.close()
-        conn.close()
-
-
 @app.route('/bookings', methods=['POST'])
 def book_room():
     data = request.get_json()
@@ -80,9 +43,9 @@ def book_room():
                            (booking_id, employee_id))
         conn.commit()
 
-        # Cập nhật trạng thái phòng sang "bận"
+        # Cập nhật trạng thái phòng sang "bận" khi đến giờ booking
         cursor.execute(
-            "UPDATE room_meeting SET status = %s WHERE room_id = %s", (True, room_id))
+            "UPDATE room_meeting SET status = %s WHERE room_id = %s AND %s BETWEEN time_start_booking AND time_end_booking", (True, room_id, current_time))
         conn.commit()
 
         return jsonify({'message': 'Booking created successfully'})
@@ -94,8 +57,6 @@ def book_room():
 
 
 # Lấy danh sách lịch họp
-
-
 @app.route('/bookings', methods=['GET'])
 def get_bookings():
     conn = create_db_connection()
