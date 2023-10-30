@@ -7,8 +7,10 @@ app = Flask(__name__)
 
 room_api = Blueprint("roomcontroller", __name__)
 
+
 def create_db_connection():
     return mysql.connector.connect(**db_config)
+
 
 @room_api.route("/rooms", methods=["GET"])
 def get_rooms():
@@ -86,6 +88,7 @@ def update_room(room_id):
         conn.close()
 
 
+
 @room_api.route("/rooms/<int:room_id>", methods=["DELETE"])
 def delete_room(room_id):
     try:
@@ -99,7 +102,6 @@ def delete_room(room_id):
     finally:
         cursor.close()
         conn.close()
-
 
 @room_api.errorhandler(404)
 def not_found(e):
