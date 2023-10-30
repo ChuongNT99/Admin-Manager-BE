@@ -11,7 +11,6 @@ db_config = {
     'database': 'admin_manager_db',
 }
 
-
 def create_db_connection():
     try:
         connection = mysql.connector.connect(**db_config)
