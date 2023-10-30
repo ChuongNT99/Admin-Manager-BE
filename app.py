@@ -18,6 +18,5 @@ def add_cors_headers(response):
 def after_request(response):
     return add_cors_headers(response)
 
-
 if __name__ == "__main":
     app.run(debug=True)
