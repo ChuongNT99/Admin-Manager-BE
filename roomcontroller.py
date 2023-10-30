@@ -5,6 +5,16 @@ import mysql.connector
 app = Flask(__name__)
 CORS(app)
 
+def add_cors_headers(response):
+    response.headers['Access-Control-Allow-Origin'] = '*'  
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE' 
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type' 
+    return response
+
+@app.after_request
+def after_request(response):
+    return add_cors_headers(response)
+
 db_config = {
     "host": "localhost",
     "user": "root",
