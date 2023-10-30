@@ -5,8 +5,6 @@ from db_config import db_config
 
 app=Flask(__name__)
 
-
-    
 employee_api = Blueprint("employeecontroller", __name__)
 
 @employee_api.route('/employee', methods=['POST', 'GET'])
