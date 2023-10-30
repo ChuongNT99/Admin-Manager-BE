@@ -1,10 +1,10 @@
 from flask import Flask 
-from employeecontroller import employee_api
+from roomcontroller import room_api
 from flask_cors import CORS
 
 app = Flask(__name__)
 
-app.register_blueprint(employee_api)
+app.register_blueprint(room_api)
 
 CORS(app)
 
